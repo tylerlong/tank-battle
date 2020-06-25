@@ -1,3 +1,5 @@
+import './index.css';
+
 import * as Phaser from 'phaser';
 
 import MainScene from './MainScene';
