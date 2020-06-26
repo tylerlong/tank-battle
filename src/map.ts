@@ -1,5 +1,7 @@
 import * as Phaser from 'phaser';
 
+import tiles from '../assets/tilesets/tuxmon-sample-32px-extruded.png';
+
 class SpawnPoint extends Phaser.GameObjects.GameObject {
   x!: number;
   y!: number;
@@ -7,10 +9,7 @@ class SpawnPoint extends Phaser.GameObjects.GameObject {
 
 class Map {
   static preload(scene: Phaser.Scene) {
-    scene.load.image(
-      'tiles',
-      '../assets/tilesets/tuxmon-sample-32px-extruded.png'
-    );
+    scene.load.image('tiles', tiles);
     scene.load.tilemapTiledJSON('map', '../assets/tilemaps/tuxemon-town.json');
   }
 
