@@ -7,7 +7,6 @@ class SpawnPoint extends Phaser.GameObjects.GameObject {
 }
 
 class MainScene extends Phaser.Scene {
-  cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   player!: Player;
 
   preload() {
@@ -57,68 +56,14 @@ class MainScene extends Phaser.Scene {
 
     // Create a sprite with physics enabled via the physics system. The image used for the sprite has
     // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
-    // this.player.sprite = this.physics.add
-    //   .sprite(spawnPoint.x, spawnPoint.y, 'atlas', 'misa-front')
-    //   .setSize(30, 40)
-    //   .setOffset(0, 24);
     this.player = new Player(this, spawnPoint.x, spawnPoint.y);
 
     // Watch the player and worldLayer for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, worldLayer);
 
-    // Create the player's walking animations from the texture atlas. These are stored in the global
-    // animation manager so any sprite can access them.
-    const anims = this.anims;
-    anims.create({
-      key: 'misa-left-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-left-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    anims.create({
-      key: 'misa-right-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-right-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    anims.create({
-      key: 'misa-front-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-front-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    anims.create({
-      key: 'misa-back-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-back-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
     const camera = this.cameras.main;
     camera.startFollow(this.player.sprite);
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    this.cursors = this.input.keyboard.createCursorKeys();
 
     // Help text that has a "fixed" position on the screen
     this.add
@@ -147,53 +92,7 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    const speed = 175;
-    const prevVelocity = this.player.sprite.body.velocity.clone();
-
-    const body = this.player.sprite.body as Phaser.Physics.Arcade.Body;
-
-    // Stop any previous movement from the last frame
-    body.setVelocity(0);
-
-    // Horizontal movement
-    if (this.cursors.left?.isDown) {
-      body.setVelocityX(-speed);
-    } else if (this.cursors.right?.isDown) {
-      body.setVelocityX(speed);
-    }
-
-    // Vertical movement
-    if (this.cursors.up?.isDown) {
-      body.setVelocityY(-speed);
-    } else if (this.cursors.down?.isDown) {
-      body.setVelocityY(speed);
-    }
-
-    // Normalize and scale the velocity so that player can't move faster along a diagonal
-    this.player.sprite.body.velocity.normalize().scale(speed);
-
-    // Update the animation last and give left/right animations precedence over up/down animations
-    if (this.cursors.left?.isDown) {
-      this.player.sprite.anims.play('misa-left-walk', true);
-    } else if (this.cursors.right?.isDown) {
-      this.player.sprite.anims.play('misa-right-walk', true);
-    } else if (this.cursors.up?.isDown) {
-      this.player.sprite.anims.play('misa-back-walk', true);
-    } else if (this.cursors.down?.isDown) {
-      this.player.sprite.anims.play('misa-front-walk', true);
-    } else {
-      this.player.sprite.anims.stop();
-
-      // If we were moving, pick and idle frame to use
-      if (prevVelocity.x < 0)
-        this.player.sprite.setTexture('atlas', 'misa-left');
-      else if (prevVelocity.x > 0)
-        this.player.sprite.setTexture('atlas', 'misa-right');
-      else if (prevVelocity.y < 0)
-        this.player.sprite.setTexture('atlas', 'misa-back');
-      else if (prevVelocity.y > 0)
-        this.player.sprite.setTexture('atlas', 'misa-front');
-    }
+    this.player.update();
   }
 }
 
