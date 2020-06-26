@@ -8,9 +8,6 @@ import dudeS from '../assets/generated/dude/walk-s.png';
 import dudeW from '../assets/generated/dude/walk-w.png';
 
 class Player {
-  cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
-  sprite: Phaser.Physics.Arcade.Sprite;
-
   static preload(scene: Phaser.Scene) {
     scene.load.spritesheet('dudeN', dudeN, {
       frameWidth: 64,
@@ -29,6 +26,9 @@ class Player {
       frameHeight: 64,
     });
   }
+
+  cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
+  sprite: Phaser.Physics.Arcade.Sprite;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.cursorKeys = scene.input.keyboard.createCursorKeys();

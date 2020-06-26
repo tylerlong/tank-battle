@@ -1,48 +1,38 @@
 import * as Phaser from 'phaser';
 
+import Map from './map';
 import Player from './player';
 
-class SpawnPoint extends Phaser.GameObjects.GameObject {
-  x!: number;
-  y!: number;
-}
-
 class MainScene extends Phaser.Scene {
+  map!: Map;
   player!: Player;
 
   preload() {
-    this.load.image(
-      'tiles',
-      '../assets/tilesets/tuxmon-sample-32px-extruded.png'
-    );
-    this.load.tilemapTiledJSON('map', '../assets/tilemaps/tuxemon-town.json');
+    Map.preload(this);
     Player.preload(this);
   }
 
   create() {
-    const tilemap = this.make.tilemap({key: 'map'});
-    const tileset = tilemap.addTilesetImage(
-      'tuxmon-sample-32px-extruded',
-      'tiles'
+    // this.map.& player
+    this.map = new Map(this);
+    this.player = new Player(
+      this,
+      this.map.spawnPoint.x,
+      this.map.spawnPoint.y
     );
-    tilemap.createStaticLayer('Below Player', tileset, 0, 0);
-    const worldLayer = tilemap.createStaticLayer('World', tileset, 0, 0);
-    worldLayer.setCollisionByProperty({collides: true});
-    const aboveLayer = tilemap.createStaticLayer('Above Player', tileset, 0, 0);
-    aboveLayer.setDepth(10);
+    this.physics.add.collider(this.player.sprite, this.map.worldLayer);
 
-    const spawnPoint = tilemap.findObject(
-      'Objects',
-      obj => obj.name === 'Spawn Point'
-    ) as SpawnPoint;
-    this.player = new Player(this, spawnPoint.x, spawnPoint.y);
-    this.physics.add.collider(this.player.sprite, worldLayer);
-
+    // camera
     const camera = this.cameras.main;
     camera.startFollow(this.player.sprite);
-    camera.setBounds(0, 0, tilemap.widthInPixels, tilemap.heightInPixels);
+    camera.setBounds(
+      0,
+      0,
+      this.map.tilemap.widthInPixels,
+      this.map.tilemap.heightInPixels
+    );
 
-    // Help text that has a "fixed" position on the screen
+    // help text
     this.add
       .text(16, 16, 'Arrow keys to move', {
         font: '18px monospace',
@@ -57,10 +47,9 @@ class MainScene extends Phaser.Scene {
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
       // Turn on physics debugging to show player's hitbox
       this.physics.world.createDebugGraphic();
-
       // Create worldLayer collision graphic above the player, but below the help text
       const graphics = this.add.graphics().setAlpha(0.75).setDepth(20);
-      worldLayer.renderDebug(graphics, {
+      this.map.worldLayer.renderDebug(graphics, {
         collidingTileColor: new Phaser.Display.Color(120, 120, 120),
         faceColor: new Phaser.Display.Color(255, 0, 0),
       });
