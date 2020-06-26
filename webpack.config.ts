@@ -1,6 +1,7 @@
 /* eslint-disable node/no-unpublished-import */
 import * as webpack from 'webpack';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as dotenv from 'dotenv';
 
 const config: webpack.Configuration = {
   mode: 'development',
@@ -23,6 +24,9 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed),
     }),
   ],
   resolve: {

@@ -77,10 +77,9 @@ class MainScene extends Phaser.Scene {
       .setDepth(30);
 
     // Debug graphics
-    this.input.keyboard.once('keydown_D', () => {
+    if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
       // Turn on physics debugging to show player's hitbox
       this.physics.world.createDebugGraphic();
-
       // Create worldLayer collision graphic above the player, but below the help text
       const graphics = this.add.graphics().setAlpha(0.75).setDepth(20);
       worldLayer.renderDebug(graphics, {
@@ -88,7 +87,7 @@ class MainScene extends Phaser.Scene {
         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
         faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
       });
-    });
+    }
   }
 
   update() {
