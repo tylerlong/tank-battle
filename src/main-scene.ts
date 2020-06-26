@@ -1,14 +1,6 @@
 import * as Phaser from 'phaser';
 
 import Player from './player';
-// eslint-disable-next-line node/no-unpublished-import
-import dudeN from '../assets/generated/dude/walk-n.png';
-// eslint-disable-next-line node/no-unpublished-import
-import dudeE from '../assets/generated/dude/walk-e.png';
-// eslint-disable-next-line node/no-unpublished-import
-import dudeS from '../assets/generated/dude/walk-s.png';
-// eslint-disable-next-line node/no-unpublished-import
-import dudeW from '../assets/generated/dude/walk-w.png';
 
 class SpawnPoint extends Phaser.GameObjects.GameObject {
   x!: number;
@@ -24,23 +16,7 @@ class MainScene extends Phaser.Scene {
       '../assets/tilesets/tuxmon-sample-32px-extruded.png'
     );
     this.load.tilemapTiledJSON('map', '../assets/tilemaps/tuxemon-town.json');
-
-    this.load.spritesheet('dudeN', dudeN, {
-      frameWidth: 64,
-      frameHeight: 64,
-    });
-    this.load.spritesheet('dudeE', dudeE, {
-      frameWidth: 64,
-      frameHeight: 64,
-    });
-    this.load.spritesheet('dudeS', dudeS, {
-      frameWidth: 64,
-      frameHeight: 64,
-    });
-    this.load.spritesheet('dudeW', dudeW, {
-      frameWidth: 64,
-      frameHeight: 64,
-    });
+    Player.preload(this);
   }
 
   create() {
@@ -82,7 +58,7 @@ class MainScene extends Phaser.Scene {
 
     // Help text that has a "fixed" position on the screen
     this.add
-      .text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
+      .text(16, 16, 'Arrow keys to move', {
         font: '18px monospace',
         fill: '#000000',
         padding: {x: 20, y: 10},
@@ -95,12 +71,12 @@ class MainScene extends Phaser.Scene {
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
       // Turn on physics debugging to show player's hitbox
       this.physics.world.createDebugGraphic();
+
       // Create worldLayer collision graphic above the player, but below the help text
       const graphics = this.add.graphics().setAlpha(0.75).setDepth(20);
       worldLayer.renderDebug(graphics, {
-        tileColor: null, // Color of non-colliding tiles
-        collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
+        collidingTileColor: new Phaser.Display.Color(120, 120, 120),
+        faceColor: new Phaser.Display.Color(255, 0, 0),
       });
     }
   }

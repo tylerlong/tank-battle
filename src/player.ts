@@ -1,6 +1,34 @@
+// eslint-disable-next-line node/no-unpublished-import
+import dudeN from '../assets/generated/dude/walk-n.png';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeE from '../assets/generated/dude/walk-e.png';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeS from '../assets/generated/dude/walk-s.png';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeW from '../assets/generated/dude/walk-w.png';
+
 class Player {
   cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   sprite: Phaser.Physics.Arcade.Sprite;
+
+  static preload(scene: Phaser.Scene) {
+    scene.load.spritesheet('dudeN', dudeN, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    scene.load.spritesheet('dudeE', dudeE, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    scene.load.spritesheet('dudeS', dudeS, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    scene.load.spritesheet('dudeW', dudeW, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+  }
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
