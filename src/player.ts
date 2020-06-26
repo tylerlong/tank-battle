@@ -4,54 +4,30 @@ class Player {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.sprite = scene.physics.add
-      .sprite(x, y, 'atlas', 'misa-front')
-      .setSize(30, 40)
-      .setOffset(0, 24);
-    // Create the player's walking animations from the texture atlas. These are stored in the global
-    // animation manager so any sprite can access them.
-    const anims = scene.anims;
-    anims.create({
-      key: 'misa-left-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-left-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
+    this.sprite = scene.physics.add.sprite(x, y, 'dudeS', 0);
+    // .setSize(30, 40)
+    // .setOffset(0, 24);
+    scene.anims.create({
+      key: 'dudeN',
+      frames: scene.anims.generateFrameNumbers('dudeN', {start: 0, end: 8}),
       frameRate: 10,
       repeat: -1,
     });
-    anims.create({
-      key: 'misa-right-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-right-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
+    scene.anims.create({
+      key: 'dudeE',
+      frames: scene.anims.generateFrameNumbers('dudeE', {start: 0, end: 8}),
       frameRate: 10,
       repeat: -1,
     });
-    anims.create({
-      key: 'misa-front-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-front-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
+    scene.anims.create({
+      key: 'dudeS',
+      frames: scene.anims.generateFrameNumbers('dudeS', {start: 0, end: 8}),
       frameRate: 10,
       repeat: -1,
     });
-    anims.create({
-      key: 'misa-back-walk',
-      frames: anims.generateFrameNames('atlas', {
-        prefix: 'misa-back-walk.',
-        start: 0,
-        end: 3,
-        zeroPad: 3,
-      }),
+    scene.anims.create({
+      key: 'dudeW',
+      frames: scene.anims.generateFrameNumbers('dudeW', {start: 0, end: 8}),
       frameRate: 10,
       repeat: -1,
     });
@@ -85,25 +61,25 @@ class Player {
 
     // Update the animation last and give left/right animations precedence over up/down animations
     if (this.cursorKeys.left?.isDown) {
-      this.sprite.anims.play('misa-left-walk', true);
+      this.sprite.anims.play('dudeW', true);
     } else if (this.cursorKeys.right?.isDown) {
-      this.sprite.anims.play('misa-right-walk', true);
+      this.sprite.anims.play('dudeE', true);
     } else if (this.cursorKeys.up?.isDown) {
-      this.sprite.anims.play('misa-back-walk', true);
+      this.sprite.anims.play('dudeN', true);
     } else if (this.cursorKeys.down?.isDown) {
-      this.sprite.anims.play('misa-front-walk', true);
+      this.sprite.anims.play('dudeS', true);
     } else {
       this.sprite.anims.stop();
 
       // If we were moving, pick and idle frame to use
       if (prevVelocity.x < 0) {
-        this.sprite.setTexture('atlas', 'misa-left');
+        this.sprite.setTexture('dudeW', 0);
       } else if (prevVelocity.x > 0) {
-        this.sprite.setTexture('atlas', 'misa-right');
+        this.sprite.setTexture('dudeE', 0);
       } else if (prevVelocity.y < 0) {
-        this.sprite.setTexture('atlas', 'misa-back');
+        this.sprite.setTexture('dudeN', 0);
       } else if (prevVelocity.y > 0) {
-        this.sprite.setTexture('atlas', 'misa-front');
+        this.sprite.setTexture('dudeS', 0);
       }
     }
   }

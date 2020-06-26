@@ -1,5 +1,14 @@
 import * as Phaser from 'phaser';
+
 import Player from './player';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeN from '../assets/generated/dude/walk-n.png';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeE from '../assets/generated/dude/walk-e.png';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeS from '../assets/generated/dude/walk-s.png';
+// eslint-disable-next-line node/no-unpublished-import
+import dudeW from '../assets/generated/dude/walk-w.png';
 
 class SpawnPoint extends Phaser.GameObjects.GameObject {
   x!: number;
@@ -16,16 +25,22 @@ class MainScene extends Phaser.Scene {
     );
     this.load.tilemapTiledJSON('map', '../assets/tilemaps/tuxemon-town.json');
 
-    // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
-    // the player animations (walking left, walking right, etc.) in one image. For more info see:
-    //  https://labs.phaser.io/view.html?src=src/animation/texture%20atlas%20animation.js
-    // If you don't use an atlas, you can do the same thing with a spritesheet, see:
-    //  https://labs.phaser.io/view.html?src=src/animation/single%20sprite%20sheet.js
-    this.load.atlas(
-      'atlas',
-      '../assets/atlas/atlas.png',
-      '../assets/atlas/atlas.json'
-    );
+    this.load.spritesheet('dudeN', dudeN, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('dudeE', dudeE, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('dudeS', dudeS, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('dudeW', dudeW, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
   }
 
   create() {
