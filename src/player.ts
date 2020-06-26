@@ -4,9 +4,10 @@ class Player {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.sprite = scene.physics.add.sprite(x, y, 'dudeS', 0);
-    // .setSize(30, 40)
-    // .setOffset(0, 24);
+    this.sprite = scene.physics.add
+      .sprite(x, y, 'dudeS', 0)
+      .setSize(40, 54)
+      .setOffset(10, 10);
     scene.anims.create({
       key: 'dudeN',
       frames: scene.anims.generateFrameNumbers('dudeN', {start: 0, end: 8}),
