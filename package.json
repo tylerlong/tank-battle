@@ -12,6 +12,7 @@
     "@types/node": "^14.0.14",
     "css-loader": "^3.6.0",
     "dotenv": "^8.2.0",
+    "file-loader": "^6.0.0",
     "gts": "^2.0.2",
     "html-webpack-plugin": "^4.3.0",
     "liberated-pixel-cup": "^0.2.2",
