@@ -63,8 +63,8 @@ class Player {
   }
 
   update() {
-    const speed = 175;
-    const prevVelocity = this.sprite.body.velocity.clone();
+    const speed = 150;
+    const previousVelocity = this.sprite.body.velocity.clone();
 
     const body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
@@ -99,15 +99,14 @@ class Player {
       this.sprite.anims.play('dudeS', true);
     } else {
       this.sprite.anims.stop();
-
       // If we were moving, pick and idle frame to use
-      if (prevVelocity.x < 0) {
+      if (previousVelocity.x < 0) {
         this.sprite.setTexture('dudeW', 0);
-      } else if (prevVelocity.x > 0) {
+      } else if (previousVelocity.x > 0) {
         this.sprite.setTexture('dudeE', 0);
-      } else if (prevVelocity.y < 0) {
+      } else if (previousVelocity.y < 0) {
         this.sprite.setTexture('dudeN', 0);
-      } else if (prevVelocity.y > 0) {
+      } else if (previousVelocity.y > 0) {
         this.sprite.setTexture('dudeS', 0);
       }
     }

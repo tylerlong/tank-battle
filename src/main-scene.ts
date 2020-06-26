@@ -20,41 +20,27 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    const map = this.make.tilemap({key: 'map'});
-
-    // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
-    // Phaser's cache (i.e. the name you used in preload)
-    const tileset = map.addTilesetImage('tuxmon-sample-32px-extruded', 'tiles');
-
-    // Parameters: layer name (or index) from Tiled, tileset, x, y
-    map.createStaticLayer('Below Player', tileset, 0, 0);
-    const worldLayer = map.createStaticLayer('World', tileset, 0, 0);
-    const aboveLayer = map.createStaticLayer('Above Player', tileset, 0, 0);
-
+    const tilemap = this.make.tilemap({key: 'map'});
+    const tileset = tilemap.addTilesetImage(
+      'tuxmon-sample-32px-extruded',
+      'tiles'
+    );
+    tilemap.createStaticLayer('Below Player', tileset, 0, 0);
+    const worldLayer = tilemap.createStaticLayer('World', tileset, 0, 0);
     worldLayer.setCollisionByProperty({collides: true});
-
-    // By default, everything gets depth sorted on the screen in the order we created things. Here, we
-    // want the "Above Player" layer to sit on top of the player, so we explicitly give it a depth.
-    // Higher depths will sit on top of lower depth objects.
+    const aboveLayer = tilemap.createStaticLayer('Above Player', tileset, 0, 0);
     aboveLayer.setDepth(10);
 
-    // Object layers in Tiled let you embed extra info into a map - like a spawn point or custom
-    // collision shapes. In the tmx file, there's an object layer with a point named "Spawn Point"
-    const spawnPoint = map.findObject(
+    const spawnPoint = tilemap.findObject(
       'Objects',
       obj => obj.name === 'Spawn Point'
     ) as SpawnPoint;
-
-    // Create a sprite with physics enabled via the physics system. The image used for the sprite has
-    // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
     this.player = new Player(this, spawnPoint.x, spawnPoint.y);
-
-    // Watch the player and worldLayer for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, worldLayer);
 
     const camera = this.cameras.main;
     camera.startFollow(this.player.sprite);
-    camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    camera.setBounds(0, 0, tilemap.widthInPixels, tilemap.heightInPixels);
 
     // Help text that has a "fixed" position on the screen
     this.add
