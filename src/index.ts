@@ -2,7 +2,7 @@ import './index.css';
 
 import * as Phaser from 'phaser';
 
-import MainScene from './MainScene';
+import MainScene from './main-scene';
 
 const config = {
   type: Phaser.AUTO,
