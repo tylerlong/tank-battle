@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import Player from './player';
 
 class SpawnPoint extends Phaser.GameObjects.GameObject {
   x!: number;
@@ -7,7 +8,7 @@ class SpawnPoint extends Phaser.GameObjects.GameObject {
 
 class MainScene extends Phaser.Scene {
   cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  player!: Phaser.Physics.Arcade.Sprite;
+  player!: Player;
 
   preload() {
     this.load.image(
@@ -56,13 +57,14 @@ class MainScene extends Phaser.Scene {
 
     // Create a sprite with physics enabled via the physics system. The image used for the sprite has
     // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
-    this.player = this.physics.add
-      .sprite(spawnPoint.x, spawnPoint.y, 'atlas', 'misa-front')
-      .setSize(30, 40)
-      .setOffset(0, 24);
+    // this.player.sprite = this.physics.add
+    //   .sprite(spawnPoint.x, spawnPoint.y, 'atlas', 'misa-front')
+    //   .setSize(30, 40)
+    //   .setOffset(0, 24);
+    this.player = new Player(this, spawnPoint.x, spawnPoint.y);
 
     // Watch the player and worldLayer for collisions, for the duration of the scene:
-    this.physics.add.collider(this.player, worldLayer);
+    this.physics.add.collider(this.player.sprite, worldLayer);
 
     // Create the player's walking animations from the texture atlas. These are stored in the global
     // animation manager so any sprite can access them.
@@ -113,7 +115,7 @@ class MainScene extends Phaser.Scene {
     });
 
     const camera = this.cameras.main;
-    camera.startFollow(this.player);
+    camera.startFollow(this.player.sprite);
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -146,9 +148,9 @@ class MainScene extends Phaser.Scene {
 
   update() {
     const speed = 175;
-    const prevVelocity = this.player.body.velocity.clone();
+    const prevVelocity = this.player.sprite.body.velocity.clone();
 
-    const body = this.player.body as Phaser.Physics.Arcade.Body;
+    const body = this.player.sprite.body as Phaser.Physics.Arcade.Body;
 
     // Stop any previous movement from the last frame
     body.setVelocity(0);
@@ -168,27 +170,29 @@ class MainScene extends Phaser.Scene {
     }
 
     // Normalize and scale the velocity so that player can't move faster along a diagonal
-    this.player.body.velocity.normalize().scale(speed);
+    this.player.sprite.body.velocity.normalize().scale(speed);
 
     // Update the animation last and give left/right animations precedence over up/down animations
     if (this.cursors.left?.isDown) {
-      this.player.anims.play('misa-left-walk', true);
+      this.player.sprite.anims.play('misa-left-walk', true);
     } else if (this.cursors.right?.isDown) {
-      this.player.anims.play('misa-right-walk', true);
+      this.player.sprite.anims.play('misa-right-walk', true);
     } else if (this.cursors.up?.isDown) {
-      this.player.anims.play('misa-back-walk', true);
+      this.player.sprite.anims.play('misa-back-walk', true);
     } else if (this.cursors.down?.isDown) {
-      this.player.anims.play('misa-front-walk', true);
+      this.player.sprite.anims.play('misa-front-walk', true);
     } else {
-      this.player.anims.stop();
+      this.player.sprite.anims.stop();
 
       // If we were moving, pick and idle frame to use
-      if (prevVelocity.x < 0) this.player.setTexture('atlas', 'misa-left');
+      if (prevVelocity.x < 0)
+        this.player.sprite.setTexture('atlas', 'misa-left');
       else if (prevVelocity.x > 0)
-        this.player.setTexture('atlas', 'misa-right');
-      else if (prevVelocity.y < 0) this.player.setTexture('atlas', 'misa-back');
+        this.player.sprite.setTexture('atlas', 'misa-right');
+      else if (prevVelocity.y < 0)
+        this.player.sprite.setTexture('atlas', 'misa-back');
       else if (prevVelocity.y > 0)
-        this.player.setTexture('atlas', 'misa-front');
+        this.player.sprite.setTexture('atlas', 'misa-front');
     }
   }
 }
