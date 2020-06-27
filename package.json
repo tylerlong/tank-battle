@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
-    "generate": "ts-node -r dotenv/config assets/generate.ts"
+    "generate": "ts-node -r dotenv/config assets/generate.ts",
+    "release": "webpack --progress --colors -p && rm -rf build"
   },
   "dependencies": {
     "phaser": "^3.23.0"

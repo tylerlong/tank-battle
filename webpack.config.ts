@@ -2,10 +2,14 @@
 import * as webpack from 'webpack';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as dotenv from 'dotenv';
+import * as path from 'path';
 
 const config: webpack.Configuration = {
   mode: 'development',
   devtool: 'source-map',
+  output: {
+    path: path.resolve(__dirname, 'docs'),
+  },
   module: {
     rules: [
       {
