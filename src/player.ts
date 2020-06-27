@@ -77,8 +77,8 @@ class Player {
         x: 64,
         y: 64,
         radius: 64,
-        base: scene.add.circle(0, 0, 64, 0x888888),
-        thumb: scene.add.circle(0, 0, 32, 0xcccccc),
+        base: scene.add.circle(0, 0, 64, 0x888888).setDepth(100),
+        thumb: scene.add.circle(0, 0, 32, 0xcccccc).setDepth(100),
         dir: '4dir',
       }
     );

@@ -3,4 +3,4 @@
 
 ## todo
 
-- relative position from player to active pointer.
+- check mobile or desktop

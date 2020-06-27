@@ -43,7 +43,7 @@ class MainScene extends Phaser.Scene {
       })
       .setScrollFactor(0)
       .setDepth(30);
-    setTimeout(() => helpText.destroy(), 10000);
+    setTimeout(() => helpText.destroy(), 3000);
 
     // Debug graphics
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
