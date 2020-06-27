@@ -29,9 +29,17 @@ class Player {
 
   cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   sprite: Phaser.Physics.Arcade.Sprite;
+  activePointer: Phaser.Input.Pointer;
+  scaleManager: Phaser.Scale.ScaleManager;
+  movingN = false;
+  movingE = false;
+  movingS = false;
+  movingW = false;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
+    this.scaleManager = scene.sys.game.scale;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
+    this.activePointer = scene.input.activePointer;
     this.sprite = scene.physics.add
       .sprite(x, y, 'dudeS', 0)
       .setSize(40, 54)
@@ -64,6 +72,31 @@ class Player {
 
   update() {
     const previousVelocity = this.sprite.body.velocity.clone();
+    this.movingE = this.movingN = this.movingS = this.movingW = false;
+    if (
+      this.cursorKeys.left?.isDown ||
+      (this.activePointer.isDown && this.activePointer.x < 100)
+    ) {
+      this.movingW = true;
+    } else if (
+      this.cursorKeys.right?.isDown ||
+      (this.activePointer.isDown &&
+        this.scaleManager.gameSize.width - this.activePointer.x < 100)
+    ) {
+      this.movingE = true;
+    }
+    if (
+      this.cursorKeys.up?.isDown ||
+      (this.activePointer.isDown && this.activePointer.y < 100)
+    ) {
+      this.movingN = true;
+    } else if (
+      this.cursorKeys.down?.isDown ||
+      (this.activePointer.isDown &&
+        this.scaleManager.gameSize.height - this.activePointer.y < 100)
+    ) {
+      this.movingS = true;
+    }
     this.updateVelocity();
     this.updateAnims(previousVelocity);
   }
@@ -76,16 +109,16 @@ class Player {
     body.setVelocity(0);
 
     // Horizontal movement
-    if (this.cursorKeys.left?.isDown) {
+    if (this.movingW) {
       body.setVelocityX(-speed);
-    } else if (this.cursorKeys.right?.isDown) {
+    } else if (this.movingE) {
       body.setVelocityX(speed);
     }
 
     // Vertical movement
-    if (this.cursorKeys.up?.isDown) {
+    if (this.movingN) {
       body.setVelocityY(-speed);
-    } else if (this.cursorKeys.down?.isDown) {
+    } else if (this.movingS) {
       body.setVelocityY(speed);
     }
 
@@ -95,13 +128,13 @@ class Player {
 
   updateAnims(previousVelocity: Phaser.Math.Vector2) {
     // Update the animation last and give left/right animations precedence over up/down animations
-    if (this.cursorKeys.left?.isDown) {
+    if (this.movingW) {
       this.sprite.anims.play('dudeW', true);
-    } else if (this.cursorKeys.right?.isDown) {
+    } else if (this.movingE) {
       this.sprite.anims.play('dudeE', true);
-    } else if (this.cursorKeys.up?.isDown) {
+    } else if (this.movingN) {
       this.sprite.anims.play('dudeN', true);
-    } else if (this.cursorKeys.down?.isDown) {
+    } else if (this.movingS) {
       this.sprite.anims.play('dudeS', true);
     } else {
       this.sprite.anims.stop();
