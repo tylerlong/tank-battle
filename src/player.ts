@@ -25,11 +25,14 @@ class Player {
       frameWidth: 64,
       frameHeight: 64,
     });
+    const url =
+      'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
+    scene.load.plugin('rexvirtualjoystickplugin', url, true);
   }
 
   cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
+  cursorKeys2: Phaser.Types.Input.Keyboard.CursorKeys;
   sprite: Phaser.Physics.Arcade.Sprite;
-  // activePointer: Phaser.Input.Pointer;
   scaleManager: Phaser.Scale.ScaleManager;
   movingN = false;
   movingE = false;
@@ -39,7 +42,6 @@ class Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.scaleManager = scene.sys.game.scale;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    // this.activePointer = scene.input.activePointer;
     this.sprite = scene.physics.add
       .sprite(x, y, 'dudeS', 0)
       .setSize(40, 54)
@@ -68,33 +70,35 @@ class Player {
       frameRate: 10,
       repeat: -1,
     });
+
+    const joyStick = (scene.plugins.get('rexvirtualjoystickplugin') as any).add(
+      this,
+      {
+        x: 64,
+        y: 64,
+        radius: 64,
+        base: scene.add.circle(0, 0, 64, 0x888888),
+        thumb: scene.add.circle(0, 0, 32, 0xcccccc),
+        dir: '4dir',
+      }
+    );
+    this.cursorKeys2 = joyStick.createCursorKeys();
   }
 
   update() {
     const previousVelocity = this.sprite.body.velocity.clone();
     this.movingE = this.movingN = this.movingS = this.movingW = false;
-    if (
-      this.cursorKeys.left?.isDown //||
-      // (this.activePointer.isDown && this.activePointer.x < 100)
-    ) {
+    if (this.cursorKeys.left?.isDown || this.cursorKeys2.left?.isDown) {
       this.movingW = true;
     } else if (
-      this.cursorKeys.right?.isDown // ||
-      // (this.activePointer.isDown &&
-      //   this.scaleManager.gameSize.width - this.activePointer.x < 100)
+      this.cursorKeys.right?.isDown ||
+      this.cursorKeys2.right?.isDown
     ) {
       this.movingE = true;
     }
-    if (
-      this.cursorKeys.up?.isDown // ||
-      // (this.activePointer.isDown && this.activePointer.y < 100)
-    ) {
+    if (this.cursorKeys.up?.isDown || this.cursorKeys2.up?.isDown) {
       this.movingN = true;
-    } else if (
-      this.cursorKeys.down?.isDown // ||
-      // (this.activePointer.isDown &&
-      //   this.scaleManager.gameSize.height - this.activePointer.y < 100)
-    ) {
+    } else if (this.cursorKeys.down?.isDown || this.cursorKeys2.down?.isDown) {
       this.movingS = true;
     }
     this.updateVelocity();
