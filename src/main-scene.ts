@@ -33,7 +33,7 @@ class MainScene extends Phaser.Scene {
     );
 
     // help text
-    this.add
+    const helpText = this.add
       .text(16, 16, 'Arrow keys to move', {
         font: '18px monospace',
         fill: '#000000',
@@ -42,6 +42,7 @@ class MainScene extends Phaser.Scene {
       })
       .setScrollFactor(0)
       .setDepth(30);
+    setTimeout(() => helpText.destroy(), 10000);
 
     // Debug graphics
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
