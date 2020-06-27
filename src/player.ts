@@ -29,7 +29,7 @@ class Player {
 
   cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   sprite: Phaser.Physics.Arcade.Sprite;
-  activePointer: Phaser.Input.Pointer;
+  // activePointer: Phaser.Input.Pointer;
   scaleManager: Phaser.Scale.ScaleManager;
   movingN = false;
   movingE = false;
@@ -39,7 +39,7 @@ class Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.scaleManager = scene.sys.game.scale;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.activePointer = scene.input.activePointer;
+    // this.activePointer = scene.input.activePointer;
     this.sprite = scene.physics.add
       .sprite(x, y, 'dudeS', 0)
       .setSize(40, 54)
@@ -74,26 +74,26 @@ class Player {
     const previousVelocity = this.sprite.body.velocity.clone();
     this.movingE = this.movingN = this.movingS = this.movingW = false;
     if (
-      this.cursorKeys.left?.isDown ||
-      (this.activePointer.isDown && this.activePointer.x < 100)
+      this.cursorKeys.left?.isDown //||
+      // (this.activePointer.isDown && this.activePointer.x < 100)
     ) {
       this.movingW = true;
     } else if (
-      this.cursorKeys.right?.isDown ||
-      (this.activePointer.isDown &&
-        this.scaleManager.gameSize.width - this.activePointer.x < 100)
+      this.cursorKeys.right?.isDown // ||
+      // (this.activePointer.isDown &&
+      //   this.scaleManager.gameSize.width - this.activePointer.x < 100)
     ) {
       this.movingE = true;
     }
     if (
-      this.cursorKeys.up?.isDown ||
-      (this.activePointer.isDown && this.activePointer.y < 100)
+      this.cursorKeys.up?.isDown // ||
+      // (this.activePointer.isDown && this.activePointer.y < 100)
     ) {
       this.movingN = true;
     } else if (
-      this.cursorKeys.down?.isDown ||
-      (this.activePointer.isDown &&
-        this.scaleManager.gameSize.height - this.activePointer.y < 100)
+      this.cursorKeys.down?.isDown // ||
+      // (this.activePointer.isDown &&
+      //   this.scaleManager.gameSize.height - this.activePointer.y < 100)
     ) {
       this.movingS = true;
     }

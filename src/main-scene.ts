@@ -6,10 +6,15 @@ import Player from './player';
 class MainScene extends Phaser.Scene {
   map!: Map;
   player!: Player;
+  joyStick!: any;
+  cursorKeys!: any;
 
   preload() {
     Map.preload(this);
     Player.preload(this);
+    const url =
+      'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
+    this.load.plugin('rexvirtualjoystickplugin', url, true);
   }
 
   create() {
@@ -55,6 +60,38 @@ class MainScene extends Phaser.Scene {
         faceColor: new Phaser.Display.Color(255, 0, 0),
       });
     }
+
+    this.joyStick = (this.plugins.get('rexvirtualjoystickplugin') as any).add(
+      this,
+      {
+        x: 100,
+        y: 500,
+        radius: 64,
+        base: this.add.circle(0, 0, 64, 0x888888),
+        thumb: this.add.circle(0, 0, 32, 0xcccccc),
+        dir: '4dir', // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+        // forceMin: 16,
+        // enable: true
+      }
+    );
+    this.cursorKeys = this.joyStick.createCursorKeys();
+    this.joyStick.on('update', this.dumpJoyStickState, this);
+
+    this.dumpJoyStickState();
+  }
+
+  dumpJoyStickState() {
+    // const cursorKeys = this.joyStick.createCursorKeys();
+    let s = 'Key down: ';
+    for (const name in this.cursorKeys) {
+      if (this.cursorKeys[name].isDown) {
+        s += name + ' ';
+      }
+    }
+    s += '\n';
+    s += 'Force: ' + Math.floor(this.joyStick.force * 100) / 100 + '\n';
+    s += 'Angle: ' + Math.floor(this.joyStick.angle * 100) / 100 + '\n';
+    console.log(s);
   }
 
   update() {

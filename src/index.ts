@@ -31,6 +31,6 @@ function resizeGame() {
   const canvas = document.querySelector('canvas');
   if (canvas !== null) {
     // game is ready
-    game.scale.setGameSize(window.innerWidth, window.innerHeight);
+    // game.scale.setGameSize(window.innerWidth, window.innerHeight);
   }
 }
