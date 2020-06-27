@@ -2,7 +2,7 @@
   "license": "All Rights Reserved",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --progress --colors",
+    "start": "webpack-dev-server --progress --colors --host 0.0.0.0",
     "generate": "ts-node -r dotenv/config assets/generate.ts",
     "release": "webpack --progress --colors -p && rm -rf build"
   },
