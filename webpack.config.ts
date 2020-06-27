@@ -20,7 +20,7 @@ const config: webpack.Configuration = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.png$/,
+        test: /\.(png|data)$/,
         use: 'file-loader',
       },
     ],
