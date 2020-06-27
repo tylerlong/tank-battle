@@ -63,9 +63,13 @@ class Player {
   }
 
   update() {
-    const speed = 150;
     const previousVelocity = this.sprite.body.velocity.clone();
+    this.updateVelocity();
+    this.updateAnims(previousVelocity);
+  }
 
+  updateVelocity() {
+    const speed = 150;
     const body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
     // Stop any previous movement from the last frame
@@ -87,7 +91,9 @@ class Player {
 
     // Normalize and scale the velocity so that player can't move faster along a diagonal
     this.sprite.body.velocity.normalize().scale(speed);
+  }
 
+  updateAnims(previousVelocity: Phaser.Math.Vector2) {
     // Update the animation last and give left/right animations precedence over up/down animations
     if (this.cursorKeys.left?.isDown) {
       this.sprite.anims.play('dudeW', true);
