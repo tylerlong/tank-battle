@@ -33,18 +33,6 @@ class MainScene extends Phaser.Scene {
       this.map.tilemap.heightInPixels
     );
 
-    // help text
-    const helpText = this.add
-      .text(16, 16, 'Arrow keys to move', {
-        font: '18px monospace',
-        fill: '#000000',
-        padding: {x: 20, y: 10},
-        backgroundColor: '#ffffff',
-      })
-      .setScrollFactor(0)
-      .setDepth(30);
-    setTimeout(() => helpText.destroy(), 3000);
-
     // Debug graphics
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
       // Turn on physics debugging
