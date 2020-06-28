@@ -3,17 +3,13 @@ import * as Phaser from 'phaser';
 import Map from './map';
 import Player from './player';
 import fullScreen from '../assets/full-screen.png';
-import {windowResize} from './events';
 
 class MainScene extends Phaser.Scene {
   map!: Map;
   player!: Player;
 
   preload() {
-    this.load.spritesheet('fullScreen', fullScreen, {
-      frameWidth: 64,
-      frameHeight: 64,
-    });
+    this.load.image('fullScreen', fullScreen);
     Map.preload(this);
     Player.preload(this);
   }
@@ -41,21 +37,18 @@ class MainScene extends Phaser.Scene {
     );
 
     const fullScreenButton = this.add
-      .image(window.innerWidth - 16, 16, 'fullScreen', 0)
-      .setOrigin(1, 0)
+      .image(8, 8, 'fullScreen')
+      .setOrigin(0, 0)
       .setInteractive()
       .setScrollFactor(0)
+      .setDepth(100)
       .on('pointerup', () => {
-        if (this.scale.isFullscreen) {
-          fullScreenButton.setFrame(0);
-          this.scale.stopFullscreen();
-        } else {
-          fullScreenButton.setFrame(1);
+        if (!this.scale.isFullscreen) {
           this.scale.startFullscreen();
         }
       });
-    windowResize.subscribe(() => {
-      fullScreenButton.x = window.innerWidth - 16;
+    document.addEventListener('fullscreenchange', () => {
+      fullScreenButton.setVisible(!this.scale.isFullscreen);
     });
 
     // Debug graphics
