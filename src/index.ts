@@ -9,7 +9,7 @@ const game = new Phaser.Game({
   type: Phaser.AUTO,
   width: window.innerWidth,
   height: window.innerHeight,
-  parent: 'game-container',
+  parent: 'container',
   render: {
     pixelArt: true,
   },
