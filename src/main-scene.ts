@@ -36,10 +36,11 @@ class MainScene extends Phaser.Scene {
       this.map.tilemap.heightInPixels
     );
 
+    // go full screen
     const fullScreenButton = this.add
       .image(8, 8, 'fullScreen')
       .setOrigin(0, 0)
-      .setInteractive()
+      .setInteractive({useHandCursor: true})
       .setScrollFactor(0)
       .setDepth(100)
       .on('pointerup', () => {
