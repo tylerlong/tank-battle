@@ -2,6 +2,8 @@ import './index.css';
 
 import * as Phaser from 'phaser';
 
+import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin';
+
 import MainScene from './main-scene';
 import {windowResize} from './events';
 
@@ -20,6 +22,15 @@ const game = new Phaser.Game({
     },
   },
   scene: [MainScene],
+  plugins: {
+    global: [
+      {
+        key: 'virtual-joystick',
+        plugin: VirtualJoystickPlugin,
+        start: true,
+      },
+    ],
+  },
 });
 
 windowResize.subscribe(() => {

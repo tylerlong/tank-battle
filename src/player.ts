@@ -27,9 +27,6 @@ class Player {
       frameWidth: 64,
       frameHeight: 64,
     });
-    const url =
-      'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
-    scene.load.plugin('rexvirtualjoystickplugin', url, true);
   }
 
   cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -73,17 +70,14 @@ class Player {
       repeat: -1,
     });
 
-    const joyStick = (scene.plugins.get('rexvirtualjoystickplugin') as any).add(
-      this,
-      {
-        x: 96,
-        y: window.innerHeight - 96,
-        radius: 64,
-        base: scene.add.circle(0, 0, 64, 0x888888, 128).setDepth(100),
-        thumb: scene.add.circle(0, 0, 32, 0xcccccc, 128).setDepth(100),
-        dir: '8dir',
-      }
-    );
+    const joyStick = (scene.plugins.get('virtual-joystick') as any).add(this, {
+      x: 96,
+      y: window.innerHeight - 96,
+      radius: 64,
+      base: scene.add.circle(0, 0, 64, 0x888888, 128).setDepth(100),
+      thumb: scene.add.circle(0, 0, 32, 0xcccccc, 128).setDepth(100),
+      dir: '8dir',
+    });
     this.cursorKeys2 = joyStick.createCursorKeys();
     windowResize.subscribe(() => {
       joyStick.y = window.innerHeight - 96;

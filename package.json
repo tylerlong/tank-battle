@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "phaser": "^3.23.0",
+    "phaser3-rex-plugins": "^1.1.19",
     "rxjs": "^6.5.5"
   },
   "devDependencies": {
