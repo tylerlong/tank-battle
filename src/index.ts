@@ -3,6 +3,7 @@ import './index.css';
 import * as Phaser from 'phaser';
 
 import MainScene from './main-scene';
+import {windowResize} from './events';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -24,12 +25,7 @@ const game = new Phaser.Game({
 // todo: allow user to toggle full screen
 // game.scale.toggleFullscreen();
 
-setTimeout(() => resizeGame(), 3000);
-window.addEventListener('resize', resizeGame);
-function resizeGame() {
-  console.log('resize game');
-  const canvas = document.querySelector('canvas');
-  if (canvas !== null) {
-    game.scale.resize(window.innerWidth, window.innerHeight);
-  }
-}
+windowResize.subscribe(() => {
+  console.log('windowResize');
+  game.scale.resize(window.innerWidth, window.innerHeight);
+});

@@ -7,7 +7,8 @@
     "release": "webpack --progress --colors -p && rm -rf build"
   },
   "dependencies": {
-    "phaser": "^3.23.0"
+    "phaser": "^3.23.0",
+    "rxjs": "^6.5.5"
   },
   "devDependencies": {
     "@types/node": "^14.0.14",
