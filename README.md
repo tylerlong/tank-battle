@@ -4,4 +4,4 @@
 ## todo
 
 - fire!
-- npm install phaser3-rex-plugins
+- get rid of all warnings
