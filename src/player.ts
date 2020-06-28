@@ -7,6 +7,8 @@ import dudeS from '../assets/generated/dude/walk-s.png';
 // eslint-disable-next-line node/no-unpublished-import
 import dudeW from '../assets/generated/dude/walk-w.png';
 
+import {windowResize} from './events';
+
 class Player {
   static preload(scene: Phaser.Scene) {
     scene.load.spritesheet('dudeN', dudeN, {
@@ -75,14 +77,17 @@ class Player {
       this,
       {
         x: 64,
-        y: 64,
+        y: window.innerHeight - 64,
         radius: 64,
-        base: scene.add.circle(0, 0, 64, 0x888888).setDepth(100),
-        thumb: scene.add.circle(0, 0, 32, 0xcccccc).setDepth(100),
-        dir: '4dir',
+        base: scene.add.circle(0, 0, 64, 0x888888, 128).setDepth(100),
+        thumb: scene.add.circle(0, 0, 32, 0xcccccc, 128).setDepth(100),
+        dir: '8dir',
       }
     );
     this.cursorKeys2 = joyStick.createCursorKeys();
+    windowResize.subscribe(() => {
+      joyStick.y = window.innerHeight - 64;
+    });
   }
 
   update() {
