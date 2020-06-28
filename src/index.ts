@@ -1,7 +1,6 @@
 import './index.css';
 
 import * as Phaser from 'phaser';
-
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin';
 
 import MainScene from './main-scene';
