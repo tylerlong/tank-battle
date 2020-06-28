@@ -76,8 +76,8 @@ class Player {
     const joyStick = (scene.plugins.get('rexvirtualjoystickplugin') as any).add(
       this,
       {
-        x: 64,
-        y: window.innerHeight - 64,
+        x: 96,
+        y: window.innerHeight - 96,
         radius: 64,
         base: scene.add.circle(0, 0, 64, 0x888888, 128).setDepth(100),
         thumb: scene.add.circle(0, 0, 32, 0xcccccc, 128).setDepth(100),
@@ -86,9 +86,9 @@ class Player {
     );
     this.cursorKeys2 = joyStick.createCursorKeys();
     windowResize.subscribe(() => {
-      joyStick.y = window.innerHeight - 64;
+      joyStick.y = window.innerHeight - 96;
       // todo: https://github.com/rexrainbow/phaser3-rex-notes/issues/105
-      joyStick.thumb.y = window.innerHeight - 64;
+      joyStick.thumb.y = window.innerHeight - 96;
     });
   }
 
