@@ -40,6 +40,10 @@ const config: webpack.Configuration = {
   resolve: {
     extensions: ['.js', '.ts'], // so that you can `import './main'` instead of `import './main.ts'`.
   },
+  performance: {
+    maxEntrypointSize: 2000000,
+    maxAssetSize: 2000000,
+  },
 };
 
 export default config;
