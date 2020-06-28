@@ -21,6 +21,7 @@ class MainScene extends Phaser.Scene {
       this.map.spawnPoint.y
     );
     this.physics.add.collider(this.player.sprite, this.map.worldLayer);
+    // todo: fix next line
     // this.player.sprite.setCollideWorldBounds(true);
 
     // camera
@@ -32,6 +33,9 @@ class MainScene extends Phaser.Scene {
       this.map.tilemap.widthInPixels,
       this.map.tilemap.heightInPixels
     );
+
+    // todo: allow user to toggle full screen
+    // game.scale.toggleFullscreen();
 
     // Debug graphics
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {

@@ -22,9 +22,6 @@ const game = new Phaser.Game({
   scene: [MainScene],
 });
 
-// todo: allow user to toggle full screen
-// game.scale.toggleFullscreen();
-
 windowResize.subscribe(() => {
   console.log('windowResize');
   game.scale.resize(window.innerWidth, window.innerHeight);

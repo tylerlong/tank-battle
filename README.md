@@ -3,4 +3,5 @@
 
 ## todo
 
-- check mobile or desktop
+- toggle full screen
+- fire!
