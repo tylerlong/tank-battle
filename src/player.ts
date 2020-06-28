@@ -71,21 +71,24 @@ class Player {
       repeat: -1,
     });
 
+    // joystick
+    const margin = 128;
+    const alpha = 0.5;
     const joyStick = (scene.plugins.get(
       'virtual-joystick'
     ) as VirtualJoystick).add(scene, {
-      x: 96,
-      y: window.innerHeight - 96,
+      x: margin,
+      y: window.innerHeight - margin,
       radius: 64,
-      base: scene.add.circle(0, 0, 64, 0x888888, 128).setDepth(100),
-      thumb: scene.add.circle(0, 0, 32, 0xcccccc, 128).setDepth(100),
+      base: scene.add.circle(0, 0, 64, 0x888888, alpha).setDepth(100),
+      thumb: scene.add.circle(0, 0, 32, 0xcccccc, alpha).setDepth(100),
       dir: '8dir',
     });
     this.cursorKeys2 = joyStick.createCursorKeys();
     windowResize.subscribe(() => {
-      joyStick.y = window.innerHeight - 96;
+      joyStick.y = window.innerHeight - margin;
       // todo: https://github.com/rexrainbow/phaser3-rex-notes/issues/105
-      joyStick.thumb.y = window.innerHeight - 96;
+      joyStick.thumb.y = window.innerHeight - margin;
     });
   }
 
@@ -110,7 +113,7 @@ class Player {
   }
 
   updateVelocity() {
-    const speed = 150;
+    const speed = 128;
     const body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
     // Stop any previous movement from the last frame

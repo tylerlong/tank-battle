@@ -23,6 +23,7 @@ class MainScene extends Phaser.Scene {
       this.map.spawnPoint.y
     );
     this.physics.add.collider(this.player.sprite, this.map.worldLayer);
+
     // todo: fix next line, I think world doesn't mean the tilemap.
     // this.player.sprite.setCollideWorldBounds(true);
 
@@ -37,8 +38,9 @@ class MainScene extends Phaser.Scene {
     );
 
     // go full screen
+    const margin = 8;
     const fullScreenButton = this.add
-      .image(8, 8, 'fullScreen')
+      .image(margin, margin, 'fullScreen')
       .setOrigin(0, 0)
       .setInteractive({useHandCursor: true})
       .setScrollFactor(0)
