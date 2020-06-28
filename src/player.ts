@@ -87,6 +87,8 @@ class Player {
     this.cursorKeys2 = joyStick.createCursorKeys();
     windowResize.subscribe(() => {
       joyStick.y = window.innerHeight - 64;
+      // todo: https://github.com/rexrainbow/phaser3-rex-notes/issues/105
+      joyStick.thumb.y = window.innerHeight - 64;
     });
   }
 
