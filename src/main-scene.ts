@@ -2,12 +2,18 @@ import * as Phaser from 'phaser';
 
 import Map from './map';
 import Player from './player';
+import fullScreen from '../assets/full-screen.png';
+import {windowResize} from './events';
 
 class MainScene extends Phaser.Scene {
   map!: Map;
   player!: Player;
 
   preload() {
+    this.load.spritesheet('fullScreen', fullScreen, {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
     Map.preload(this);
     Player.preload(this);
   }
@@ -34,8 +40,23 @@ class MainScene extends Phaser.Scene {
       this.map.tilemap.heightInPixels
     );
 
-    // todo: allow user to toggle full screen
-    // game.scale.toggleFullscreen();
+    const fullScreenButton = this.add
+      .image(window.innerWidth - 16, 16, 'fullScreen', 0)
+      .setOrigin(1, 0)
+      .setInteractive()
+      .setScrollFactor(0)
+      .on('pointerup', () => {
+        if (this.scale.isFullscreen) {
+          fullScreenButton.setFrame(0);
+          this.scale.stopFullscreen();
+        } else {
+          fullScreenButton.setFrame(1);
+          this.scale.startFullscreen();
+        }
+      });
+    windowResize.subscribe(() => {
+      fullScreenButton.x = window.innerWidth - 16;
+    });
 
     // Debug graphics
     if (JSON.parse(process.env.PHASER_DEBUG ?? 'false') === true) {
