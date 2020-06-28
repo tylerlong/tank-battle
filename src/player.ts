@@ -8,6 +8,7 @@ import dudeS from '../assets/generated/dude/walk-s.png';
 import dudeW from '../assets/generated/dude/walk-w.png';
 
 import {windowResize} from './events';
+import {VirtualJoystick} from './types';
 
 class Player {
   static preload(scene: Phaser.Scene) {
@@ -70,7 +71,9 @@ class Player {
       repeat: -1,
     });
 
-    const joyStick = (scene.plugins.get('virtual-joystick') as any).add(this, {
+    const joyStick = (scene.plugins.get(
+      'virtual-joystick'
+    ) as VirtualJoystick).add(scene, {
       x: 96,
       y: window.innerHeight - 96,
       radius: 64,
