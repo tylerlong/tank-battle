@@ -7,5 +7,5 @@ At the moment it is still under heavy development, not ready to play.
 
 ## todo
 
-- fire!
 - multiple levels
+- play sound

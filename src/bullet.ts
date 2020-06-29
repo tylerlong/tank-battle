@@ -25,7 +25,16 @@ class Bullet {
       player.sprite.y,
       'bullet'
     );
-    scene.physics.add.collider(this.sprite, map.worldLayer);
+    scene.physics.add.collider(this.sprite, map.worldLayer, () => {
+      this.sprite.destroy();
+    });
+    (this.sprite.body as Phaser.Physics.Arcade.Body).onWorldBounds = true;
+    scene.physics.world.on(
+      'worldbounds',
+      (body: Phaser.Physics.Arcade.Body) => {
+        body.gameObject.destroy();
+      }
+    );
     this.sprite.setCollideWorldBounds(true);
     const body = this.sprite.body as Phaser.Physics.Arcade.Body;
     body.setVelocity(0);
@@ -49,7 +58,6 @@ class Bullet {
       }
     }
   }
-  update() {}
 }
 
 export default Bullet;
