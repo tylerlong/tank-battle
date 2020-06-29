@@ -20,10 +20,9 @@ class MainScene extends Phaser.Scene {
     // this.map.& player
     this.map = new Map(this);
     this.player = new Player({scene: this, map: this.map});
-
-    setTimeout(
-      () => new Bullet({scene: this, player: this.player, map: this.map}),
-      3000
+    this.input.keyboard.on(
+      'keydown_SPACE',
+      () => new Bullet({scene: this, player: this.player, map: this.map})
     );
 
     // camera
