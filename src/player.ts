@@ -39,6 +39,7 @@ class Player {
   movingE = false;
   movingS = false;
   movingW = false;
+  facing: 'N' | 'E' | 'S' | 'W' = 'S';
 
   constructor({scene, map}: {scene: Phaser.Scene; map: Map}) {
     this.scaleManager = scene.sys.game.scale;
@@ -100,16 +101,20 @@ class Player {
     this.movingE = this.movingN = this.movingS = this.movingW = false;
     if (this.cursorKeys.left?.isDown || this.cursorKeys2.left?.isDown) {
       this.movingW = true;
+      this.facing = 'W';
     } else if (
       this.cursorKeys.right?.isDown ||
       this.cursorKeys2.right?.isDown
     ) {
       this.movingE = true;
+      this.facing = 'E';
     }
     if (this.cursorKeys.up?.isDown || this.cursorKeys2.up?.isDown) {
       this.movingN = true;
+      this.facing = 'N';
     } else if (this.cursorKeys.down?.isDown || this.cursorKeys2.down?.isDown) {
       this.movingS = true;
+      this.facing = 'S';
     }
     this.updateVelocity();
     this.updateAnims(previousVelocity);

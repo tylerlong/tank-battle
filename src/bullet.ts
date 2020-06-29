@@ -28,7 +28,26 @@ class Bullet {
     scene.physics.add.collider(this.sprite, map.worldLayer);
     this.sprite.setCollideWorldBounds(true);
     const body = this.sprite.body as Phaser.Physics.Arcade.Body;
-    body.setVelocity(0, -200);
+    body.setVelocity(0);
+    const speed = 200;
+    switch (player.facing) {
+      case 'E': {
+        body.setVelocityX(speed);
+        break;
+      }
+      case 'W': {
+        body.setVelocityX(-speed);
+        break;
+      }
+      case 'N': {
+        body.setVelocityY(-speed);
+        break;
+      }
+      case 'S': {
+        body.setVelocityY(speed);
+        break;
+      }
+    }
   }
   update() {}
 }
