@@ -9,3 +9,4 @@ At the moment it is still under heavy development, not ready to play.
 
 - multiple levels
 - play sound
+- mobile fire button
