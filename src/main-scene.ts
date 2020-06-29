@@ -17,13 +17,7 @@ class MainScene extends Phaser.Scene {
   create() {
     // this.map.& player
     this.map = new Map(this);
-    this.player = new Player(
-      this,
-      this.map.spawnPoint.x,
-      this.map.spawnPoint.y
-    );
-    this.physics.add.collider(this.player.sprite, this.map.worldLayer);
-    this.player.sprite.setCollideWorldBounds(true);
+    this.player = new Player({scene: this, map: this.map});
 
     // camera
     const camera = this.cameras.main;

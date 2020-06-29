@@ -7,6 +7,7 @@ import dudeS from '../assets/generated/dude/walk-s.png';
 // eslint-disable-next-line node/no-unpublished-import
 import dudeW from '../assets/generated/dude/walk-w.png';
 
+import Map from './map';
 import {windowResize} from './events';
 import {VirtualJoystick} from './types';
 
@@ -39,13 +40,15 @@ class Player {
   movingS = false;
   movingW = false;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor({scene, map}: {scene: Phaser.Scene; map: Map}) {
     this.scaleManager = scene.sys.game.scale;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
     this.sprite = scene.physics.add
-      .sprite(x, y, 'dudeS', 0)
+      .sprite(map.spawnPoint.x, map.spawnPoint.y, 'dudeS', 0)
       .setSize(40, 54)
       .setOffset(10, 10);
+    scene.physics.add.collider(this.sprite, map.worldLayer);
+    this.sprite.setCollideWorldBounds(true);
     scene.anims.create({
       key: 'dudeN',
       frames: scene.anims.generateFrameNumbers('dudeN', {start: 0, end: 8}),
