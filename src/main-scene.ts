@@ -3,6 +3,7 @@ import * as Phaser from 'phaser';
 import Map from './map';
 import Player from './player';
 import fullScreen from '../assets/full-screen.png';
+import Bullet from './bullet';
 
 class MainScene extends Phaser.Scene {
   map!: Map;
@@ -12,12 +13,18 @@ class MainScene extends Phaser.Scene {
     this.load.image('fullScreen', fullScreen);
     Map.preload(this);
     Player.preload(this);
+    Bullet.preload(this);
   }
 
   create() {
     // this.map.& player
     this.map = new Map(this);
     this.player = new Player({scene: this, map: this.map});
+
+    setTimeout(
+      () => new Bullet({scene: this, player: this.player, map: this.map}),
+      3000
+    );
 
     // camera
     const camera = this.cameras.main;

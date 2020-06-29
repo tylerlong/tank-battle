@@ -76,7 +76,7 @@ class Player {
 
     // joystick
     const margin = 128;
-    const alpha = 0.5;
+    const alpha = 0.4;
     const joyStick = (scene.plugins.get(
       'virtual-joystick'
     ) as VirtualJoystick).add(scene, {

@@ -8,4 +8,4 @@ At the moment it is still under heavy development, not ready to play.
 ## todo
 
 - fire!
-- world boundary
+- multiple levels
