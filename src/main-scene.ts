@@ -23,9 +23,7 @@ class MainScene extends Phaser.Scene {
       this.map.spawnPoint.y
     );
     this.physics.add.collider(this.player.sprite, this.map.worldLayer);
-
-    // todo: fix next line, I think world doesn't mean the tilemap.
-    // this.player.sprite.setCollideWorldBounds(true);
+    this.player.sprite.setCollideWorldBounds(true);
 
     // camera
     const camera = this.cameras.main;

@@ -27,6 +27,17 @@ class Map {
     this.tilemap.createStaticLayer('Below Player', tileset, 0, 0);
     this.worldLayer = this.tilemap.createStaticLayer('World', tileset, 0, 0);
     this.worldLayer.setCollisionByProperty({collides: true});
+    // by default world bound is window size instead of tilemap size
+    scene.physics.world.setBounds(
+      0,
+      0,
+      this.worldLayer.width,
+      this.worldLayer.height,
+      true,
+      true,
+      true,
+      true
+    );
     const aboveLayer = this.tilemap.createStaticLayer(
       'Above Player',
       tileset,
