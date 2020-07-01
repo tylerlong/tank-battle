@@ -1,5 +1,5 @@
-import {fromEvent, interval, timer} from 'rxjs';
-import {debounce, filter} from 'rxjs/operators';
+import {fromEvent, interval, timer, merge} from 'rxjs';
+import {debounce, filter, throttle} from 'rxjs/operators';
 
 export const windowResize = fromEvent(window, 'resize').pipe(
   debounce(() => interval(100))
@@ -7,5 +7,8 @@ export const windowResize = fromEvent(window, 'resize').pipe(
 
 export const fireButtonPress = (scene: Phaser.Scene) => {
   const spaceKey = scene.input.keyboard.addKey('SPACE');
-  return timer(0, 200).pipe(filter(() => spaceKey.isDown));
+  return merge(
+    fromEvent(spaceKey, 'down'), // key down
+    timer(0, 200).pipe(filter(() => spaceKey.isDown)) // key down and hold
+  ).pipe(throttle(() => interval(200)));
 };
