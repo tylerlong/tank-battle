@@ -24,7 +24,7 @@ const config: webpack.Configuration = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|data)$/,
+        test: /\.(png|data|ogg)$/,
         use: 'file-loader',
       },
     ],

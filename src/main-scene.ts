@@ -17,7 +17,7 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    // this.map.& player
+    // map & player
     this.map = new Map(this);
     this.player = new Player({scene: this, map: this.map});
     this.input.keyboard.on(

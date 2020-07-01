@@ -7,6 +7,17 @@ At the moment it is still under heavy development, not ready to play.
 
 ## todo
 
+- cannot go full screen on iPad
+  - https://phaser.discourse.group/t/fullscreen-support-on-ios/996
 - multiple levels
-- play sound
 - mobile fire button
+- multi-players via WebRTC
+- new map for tanks
+- new image for tank
+- replace sprite with image rotation
+- show tank tracks(timeout to remove)
+- force and speed
+- angle and direction
+- inertia 
+
+- find an apt

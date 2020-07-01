@@ -1,5 +1,7 @@
 // eslint-disable-next-line node/no-unpublished-import
 import bullet from '../assets/bullet.png';
+import chop from '../assets/chop.ogg';
+import wood from '../assets/wood.ogg';
 
 import Player from './player';
 import Map from './map';
@@ -7,6 +9,8 @@ import Map from './map';
 class Bullet {
   static preload(scene: Phaser.Scene) {
     scene.load.image('bullet', bullet);
+    scene.load.audio('chop', chop);
+    scene.load.audio('wood', wood);
   }
 
   sprite: Phaser.Physics.Arcade.Sprite;
@@ -25,7 +29,9 @@ class Bullet {
       player.sprite.y,
       'bullet'
     );
+    scene.sound.play('chop');
     scene.physics.add.collider(this.sprite, map.worldLayer, () => {
+      scene.sound.play('wood');
       this.sprite.destroy();
     });
     (this.sprite.body as Phaser.Physics.Arcade.Body).onWorldBounds = true;
