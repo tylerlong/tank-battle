@@ -44,7 +44,7 @@ class Bullet {
     this.sprite.setCollideWorldBounds(true);
     const body = this.sprite.body as Phaser.Physics.Arcade.Body;
     body.setVelocity(0);
-    const speed = 200;
+    const speed = 512;
     switch (player.facing) {
       case 'E': {
         body.setVelocityX(speed);

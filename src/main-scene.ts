@@ -4,6 +4,7 @@ import Map from './map';
 import Player from './player';
 import fullScreen from '../assets/full-screen.png';
 import Bullet from './bullet';
+import {fireButtonPress} from './events';
 
 class MainScene extends Phaser.Scene {
   map!: Map;
@@ -20,10 +21,9 @@ class MainScene extends Phaser.Scene {
     // map & player
     this.map = new Map(this);
     this.player = new Player({scene: this, map: this.map});
-    this.input.keyboard.on(
-      'keydown_SPACE',
-      () => new Bullet({scene: this, player: this.player, map: this.map})
-    );
+    fireButtonPress(this).subscribe(() => {
+      new Bullet({scene: this, player: this.player, map: this.map});
+    });
 
     // camera
     const camera = this.cameras.main;
